@@ -29,96 +29,63 @@ print('Using {} device'.format(device))
 # mocap settings
 # important: the skeleton needs to be identical in all mocap recordings
 
-mocap_file_path = "D:/Data/mocap/stocos/bvh"
-mocap_files = ["polytopia_fullbody_take2.bvh"]
+"""
+mocap_file_path = "../../../../../../Data/mocap/stocos/solos/"
+mocap_files = ["Muriel_Take1.bvh",
+               "Muriel_Take2.bvh",
+               "Muriel_Take3.bvh",
+               "Muriel_Take4.bvh",
+               "Muriel_Take5.bvh",
+               "Muriel_Take6.bvh"]
 
-mocap_valid_frame_ranges = [ [ 500, 9500 ] ]
+mocap_valid_frame_ranges = [ [ 0, 16709 ],
+                            [ 0, 11540 ],
+                            [ 0, 12373 ],
+                            [ 0, 5006 ],
+                            [ 0, 27628 ],
+                            [ 0, 12380 ]]
+"""
 
-joint_loss_weights = [ 
+mocap_file_path = "../../../../../../Data/mocap/stocos/solos/"
+mocap_files = ["Muriel_Take2.bvh", "Muriel_Take4.bvh"]
+mocap_valid_frame_ranges = [ [ 0, 11540 ], [ 0, 5006 ] ]
+
+joint_loss_weights = [
     1.0, # Hips
-    1.0, # Spine
-    1.0, # Spine1
-    1.0, # Spine2
-    1.0, # Neck
-    1.0, # Head
-    1.0, # Head_Nub
-    1.0, # LeftShoulder
-    1.0, # LeftArm
-    1.0, # LeftForeArm
-    1.0, # LeftForeArmRoll
-    1.0, # LeftHand
-    0.05, # LeftInHandThumb
-    0.05, # LeftHandThumb1
-    0.05, # LeftHandThumb2
-    0.05, # LeftHandThumb3
-    0.05, # LeftHandThumb3_Nub
-    0.05, # LeftInHandIndex
-    0.05, # LeftHandIndex1
-    0.05, # LeftHandIndex2
-    0.05, # LeftHandIndex3
-    0.05, # LeftHandIndex3_Nub
-    0.05, # LeftInHandMiddle
-    0.05, # LeftHandMiddle1
-    0.05, # LeftHandMiddle2
-    0.05, # LeftHandMiddle3
-    0.05, # LeftHandMiddle3_Nub
-    0.05, # LeftInHandRing
-    0.05, # LeftHandRing1
-    0.05, # LeftHandRing2
-    0.05, # LeftHandRing3
-    0.05, # LeftHandRing3_Nub
-    0.05, # LeftInHandPinky
-    0.05, # LeftHandPinky1
-    0.05, # LeftHandPinky2
-    0.05, # LeftHandPinky3
-    0.05, # LeftHandPinky3_Nub
-    1.0, # RightShoulder
-    1.0, # RightArm
-    1.0, # RightForeArm
-    1.0, # RightForeArmRoll
-    1.0, # RightHand
-    0.05, # RightInHandThumb
-    0.05, # RightHandThumb1
-    0.05, # RightHandThumb2
-    0.05, # RightHandThumb3
-    0.05, # RightHandThumb3_Nub
-    0.05, # RightInHandIndex
-    0.05, # RightHandIndex1
-    0.05, # RightHandIndex2
-    0.05, # RightHandIndex3
-    0.05, # RightHandIndex3_Nub
-    0.05, # RightInHandMiddle
-    0.05, # RightHandMiddle1
-    0.05, # RightHandMiddle2
-    0.05, # RightHandMiddle3
-    0.05, # RightHandMiddle3_Nub
-    0.05, # RightInHandRing
-    0.05, # RightHandRing1
-    0.05, # RightHandRing2
-    0.05, # RightHandRing3
-    0.05, # RightHandRing3_Nub
-    0.05, # RightInHandPinky
-    0.05, # RightHandPinky1
-    0.05, # RightHandPinky2
-    0.05, # RightHandPinky3
-    0.05, # RightHandPinky3_Nub
+    1.0, # RightUpLeg
+    1.0, # RightLeg
+    1.0, # RightFoot
+    1.0, # RightToeBase
+    1.0, # RightToeBase_Nub
     1.0, # LeftUpLeg
     1.0, # LeftLeg
     1.0, # LeftFoot
     1.0, # LeftToeBase
     1.0, # LeftToeBase_Nub
-    1.0, # RightUpLeg
-    1.0, # RightLeg
-    1.0, # RightFoot
-    1.0, # RightToeBase
-    1.0 # RightToeBase_Nub
+    1.0, # Spine
+    1.0, # Spine1
+    1.0, # Spine2
+    1.0, # Spine3
+    1.0, # LeftShoulder
+    1.0, # LeftArm
+    1.0, # LeftForeArm
+    1.0, # LeftHand
+    1.0, # LeftHand_Nub
+    1.0, # RightShoulder
+    1.0, # RightArm
+    1.0, # RightForeArm
+    1.0, # RightHand
+    1.0, # RightHand_Nub
+    1.0, # Neck
+    1.0, # Head
+    1.0 # Head_Nub
     ]
 
-mocap_fps = 120
+mocap_fps = 50
 
 # model settings
 latent_dim = 32
-sequence_length = 8
+sequence_length = 64
 ae_rnn_layer_count = 2
 ae_rnn_layer_size = 512
 ae_dense_layer_sizes = [ 512 ]
@@ -130,9 +97,9 @@ save_weights = True
 
 # load model weights
 load_weights = False
-disc_prior_weights_file = "results_quat_celoss_128/weights/disc_prior_weights_epoch_800"
-encoder_weights_file = "results_quat_celoss_128/weights/encoder_weights_epoch_800"
-decoder_weights_file = "results_quat_celoss_128/weights/decoder_weights_epoch_800"
+disc_prior_weights_file = "results_xsens_64/weights/disc_prior_weights_epoch_600"
+encoder_weights_file = "results_xsens_64/weights/encoder_weights_epoch_600"
+decoder_weights_file = "results_xsens_64/weights/decoder_weights_epoch_600"
 
 # training settings
 sequence_offset = 2 # when creating sequence excerpts, each excerpt is offset from the previous one by this value
@@ -145,7 +112,7 @@ ae_norm_loss_scale = 0.1
 ae_pos_loss_scale = 0.1
 ae_quat_loss_scale = 1.0
 ae_prior_loss_scale = 0.1 # weight for prior distribution loss
-epochs = 400
+epochs = 600
 model_save_interval = 50
 save_history = True
 
@@ -491,8 +458,8 @@ if load_weights and decoder_weights_file:
 disc_optimizer = torch.optim.Adam(disc_prior.parameters(), lr=dp_learning_rate)
 ae_optimizer = torch.optim.Adam(list(encoder.parameters()) + list(decoder.parameters()), lr=ae_learning_rate)
 
-disc_scheduler = torch.optim.lr_scheduler.StepLR(disc_optimizer, step_size=100, gamma=0.1) # reduce the learning every 20 epochs by a factor of 10
-ae_scheduler = torch.optim.lr_scheduler.StepLR(ae_optimizer, step_size=100, gamma=0.1) # reduce the learning every 20 epochs by a factor of 10
+disc_scheduler = torch.optim.lr_scheduler.StepLR(disc_optimizer, step_size=50, gamma=0.5) # reduce the learning every 20 epochs by a factor of 10
+ae_scheduler = torch.optim.lr_scheduler.StepLR(ae_optimizer, step_size=50, gamma=0.5) # reduce the learning every 20 epochs by a factor of 10
 
 mse_loss = nn.MSELoss()
 cross_entropy = nn.BCELoss()
@@ -801,7 +768,7 @@ def train(train_dataloader, test_dataloader, epochs):
         for test_batch in test_dataloader:
             test_batch = test_batch.to(device)
             
-            _ae_loss, _, _, _, _ = ae_test_step(train_batch)
+            _ae_loss, _, _, _, _ = ae_test_step(test_batch)
             
             _ae_loss = _ae_loss.detach().cpu().numpy()
             ae_test_loss_per_epoch.append(_ae_loss)
@@ -1044,7 +1011,7 @@ seq_index = 1000
 create_rec_sequence_anim(seq_index, "results/anims/rec_sequence_epoch_{}_seq_{}.gif".format(epochs, seq_index))
 
 # configure sequence blending
-seq_overlap = 4 # 2 for 8, 32 for 128
+seq_overlap = 16 # 2 for 8, 32 for 128
 base_pose = np.reshape(pose_sequence[0], (joint_count, joint_dim))
 
 # reconstruct original pose sequence
@@ -1113,175 +1080,3 @@ for index in range(len(seq1_encodings)):
     mix_encodings.append(mix_encoding)
 
 decode_sequence_encodings(mix_encodings, seq_overlap, base_pose, "results/anims/seq_mix_epoch_{}_seq1_{}-{}_seq2_{}-{}.gif".format(epochs, seq1_start_index, seq1_end_index, seq2_start_index, seq2_end_index))
-
-"""
-experiment with clustering encodings
-"""
-
-frame_indices = list(range(pose_sequence.shape[0]))
-encodings = np.array(encode_sequences(frame_indices))
-
-def create_2d_representation(data):
-
-    # use TSNE for dimensionality reduction
-    tsne = TSNE(n_components=2, n_iter=5000, verbose=1)    
-    Z_tsne = tsne.fit_transform(data)
-    
-    return Z_tsne
-
-encodings_2d = create_2d_representation(encodings)
-
-"""
-KMeans Clustering
-"""
-
-from sklearn.cluster import KMeans
-
-cluster_count = 6
-random_state = 170
-
-km = KMeans(n_clusters=cluster_count, n_init= "auto", random_state = random_state)
-labels =  km.fit_predict(encodings)
-
-labels_unique = np.unique(labels)
-n_clusters_ = len(labels_unique)
-
-# plot 2d clusters
-
-plt.figure(1)
-plt.clf()
-
-for k in range(cluster_count):
-    my_members = labels == k
-    plt.scatter(encodings_2d[my_members, 0], encodings_2d[my_members, 1], s=0.2)
-
-plt.title("KMeans Clustering")
-plt.show()
-
-
-"""
-MeanShift Clustering
-"""
-
-from sklearn.cluster import MeanShift, estimate_bandwidth
-
-# automatically estimate bandwidth
-bandwidth = estimate_bandwidth(encodings, quantile=0.1, n_samples=500)
-
-ms = MeanShift(bandwidth=bandwidth)
-ms.fit(encodings)
-labels = ms.labels_
-cluster_centers = ms.cluster_centers_
-
-labels_unique = np.unique(labels)
-n_clusters_ = len(labels_unique)
-
-print("number of estimated clusters : %d" % n_clusters_)
-
-# plot 2d clusters
-
-plt.figure(1)
-plt.clf()
-
-for k in range(n_clusters_):
-    my_members = labels == k
-    plt.scatter(encodings_2d[my_members, 0], encodings_2d[my_members, 1], s=0.2)
-
-plt.title("Meanshift Clustering")
-plt.show()
-
-"""
-DBScan Clustering
-"""
-
-from sklearn.cluster import DBSCAN
-
-eps = 0.7
-
-db = DBSCAN(eps=eps, min_samples=10)
-fit = db.fit(encodings)
-labels = db.labels_
-
-# Number of clusters in labels, ignoring noise if present.
-n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
-n_noise_ = list(labels).count(-1)
-
-print("Estimated number of clusters: %d" % n_clusters_)
-print("Estimated number of noise points: %d" % n_noise_)
-
-# plot 2d clusters
-
-plt.figure(1)
-plt.clf()
-
-for k in range(cluster_count):
-    my_members = labels == k
-    plt.scatter(encodings_2d[my_members, 0], encodings_2d[my_members, 1], s=0.2)
-
-plt.title("DBScan Clustering")
-plt.show()
-
-
-
-# debug
-# original sequence prediction function from GranularDance
-
-def create_pred_sequence_animation(start_frame, frame_count, seq_overlap, base_pose, file_name):
-
-    seq_env = np.hanning(sequence_length)
-    seq_excerpt_count = max((frame_count - sequence_length) // seq_overlap, 0) + 1
-    
-    print("seq_excerpt_count ", seq_excerpt_count)
-    
-    combined_seq_length = (seq_excerpt_count - 1) * seq_overlap + sequence_length
-
-    combined_pred_sequence = np.full(shape=(combined_seq_length, joint_count, joint_dim), fill_value=base_pose)
-    
-    for excerpt_index in range(seq_excerpt_count):
-        excerpt_start_frame = start_frame + excerpt_index * seq_overlap
-        excerpt_end_frame = excerpt_start_frame + sequence_length
-        
-        sequence_excerpt = pose_sequence[excerpt_start_frame:excerpt_end_frame]
-        sequence_excerpt = np.expand_dims(sequence_excerpt, axis=0)
-        sequence_excerpt = torch.from_numpy(sequence_excerpt).to(device)
-        
-        with torch.no_grad():
-            sequence_enc = encoder(sequence_excerpt)
-            pred_sequence = decoder(sequence_enc)
-            
-        pred_sequence = torch.squeeze(pred_sequence)
-            
-        pred_sequence = pred_sequence.detach().cpu().numpy()
-        pred_sequence = np.reshape(pred_sequence, (-1, joint_count, joint_dim))
-        
-        combined_frame = excerpt_index * seq_overlap
-        
-        for si in range(sequence_length):
-            for ji in range(joint_count): 
-                current_quat = combined_pred_sequence[combined_frame + si, ji, :]
-                target_quat = pred_sequence[si, ji, :]
-                quat_mix = seq_env[si]
-                mix_quat = slerp(current_quat, target_quat, quat_mix )
-                combined_pred_sequence[combined_frame + si, ji, :] = mix_quat
-    
-    combined_pred_sequence = torch.from_numpy(combined_pred_sequence)
-    combined_pred_sequence = combined_pred_sequence.view((-1, 4))
-    combined_pred_sequence = nn.functional.normalize(combined_pred_sequence, p=2, dim=1)
-    combined_pred_sequence = combined_pred_sequence.view((combined_seq_length, joint_count, joint_dim))
-    combined_pred_sequence = torch.unsqueeze(combined_pred_sequence, dim=0)
-    combined_pred_sequence = combined_pred_sequence.to(device)
-    
-    zero_trajectory = torch.zeros((1, combined_seq_length, 3), dtype=torch.float32)
-    zero_trajectory = zero_trajectory.to(device)
-
-    skel_sequence = forward_kinematics(combined_pred_sequence, zero_trajectory)
-    
-    skel_sequence = skel_sequence.detach().cpu().numpy()
-    skel_sequence = np.squeeze(skel_sequence)
-    
-    view_min, view_max = utils.get_equal_mix_max_positions(skel_sequence)
-    skel_images = poseRenderer.create_pose_images(skel_sequence, view_min, view_max, view_ele, view_azi, view_line_width, view_size, view_size)
-    skel_images[0].save(file_name, save_all=True, append_images=skel_images[1:], optimize=False, duration=33.0, loop=0)
-
-
-create_pred_sequence_animation(100, 512, seq_overlap, base_pose, "rec_100-612.gif")
